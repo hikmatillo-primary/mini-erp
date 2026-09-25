@@ -872,8 +872,17 @@ function render7StageConveyor() {
 
     const cardsHtml = stageBatches.length > 0
       ? stageBatches.map(b => {
+          const stageIds = ["cutting", "splitting", "sewing", "stone", "ironing", "labeling", "packaging"];
+          const stageIdx = stageIds.indexOf(b.currentStage);
           const nextBtnText = b.currentStage === "packaging" ? "✅ Tayyor ombor" : "Keyingisiga ➔";
           const isSelected = state.selectedRollId === b.id;
+
+          const stepBarHtml = `
+            <div class="batch-step-bar" title="7 bosqichdan ${stageIdx + 1}-bosqichda (${stageIdx + 1}/7)">
+              ${stageIds.map((s, idx) => `<span class="step-segment ${idx <= stageIdx ? 'filled' : ''}"></span>`).join('')}
+              <span class="step-label">${stageIdx + 1}/7</span>
+            </div>
+          `;
 
           return `
             <div class="stage-batch-card" style="${isSelected ? 'border-color: #1e60ff; box-shadow:0 4px 15px rgba(30,96,255,0.2);' : ''}">
@@ -881,7 +890,8 @@ function render7StageConveyor() {
                 <span class="roll-tag">${b.rollNumber || b.id}</span>
                 <span style="font-size:12px; font-weight:800; color:#0f172a;">${b.quantity} dona</span>
               </div>
-              <div style="font-size:13.5px; font-weight:700; color:#0f172a; line-height:1.3;">${b.name}</div>
+              ${stepBarHtml}
+              <div style="font-size:13.5px; font-weight:700; color:#0f172a; line-height:1.3; margin-top:2px;">${b.name}</div>
               <div style="font-size:11.5px; color:#64748b; background:#f8fafc; padding:6px 8px; border-radius:8px;">
                 <div>Kesilgan: <b>${b.fabricMetersCut || Math.ceil(b.quantity / 3)}m</b> (1m ➔ 3 ta)</div>
                 <div>O'lcham: <b>${b.size}</b></div>
@@ -2011,11 +2021,18 @@ function onPaymentClientSelectChange() {
   const client = (state.clients || []).find(c => c.id === clientId);
   const infoBox = document.getElementById("pay-client-info");
   const amountInput = document.getElementById("pay-amount");
+  const quickBtn = document.getElementById("btn-quick-full-debt");
 
   if (!client) {
     if (infoBox) infoBox.style.display = "none";
     if (amountInput) amountInput.value = "";
+    if (quickBtn) quickBtn.style.display = "none";
+    onPayAmountInput();
     return;
+  }
+
+  if (quickBtn) {
+    quickBtn.style.display = (client.balance > 0) ? "inline-flex" : "none";
   }
 
   if (infoBox) {
@@ -2043,6 +2060,32 @@ function onPaymentClientSelectChange() {
 
   if (amountInput) {
     amountInput.value = client.balance > 0 ? client.balance : "";
+    onPayAmountInput();
+  }
+}
+
+function fillFullDebt() {
+  const clientId = document.getElementById("pay-client-select").value;
+  const client = (state.clients || []).find(c => c.id === clientId);
+  if (!client || (client.balance || 0) <= 0) return;
+
+  const amountInput = document.getElementById("pay-amount");
+  amountInput.value = client.balance;
+  onPayAmountInput();
+  showToast(`To'liq qarz summasi (${(client.balance).toLocaleString()} so'm) kiritildi ⚡`, "info");
+}
+
+function onPayAmountInput() {
+  const amountInput = document.getElementById("pay-amount");
+  const liveText = document.getElementById("pay-amount-live-text");
+  if (!amountInput || !liveText) return;
+
+  const val = parseFloat(amountInput.value);
+  if (!isNaN(val) && val > 0) {
+    liveText.style.display = "block";
+    liveText.innerHTML = `✓ Kiritilgan summa: <strong>${(val).toLocaleString()} so'm</strong>`;
+  } else {
+    liveText.style.display = "none";
   }
 }
 
@@ -2582,8 +2625,39 @@ function exportHistoryCSV() {
 }
 
 function closeModal(modalId) {
-  document.getElementById(modalId).classList.remove("open");
+  const el = document.getElementById(modalId);
+  if (el) el.classList.remove("open");
 }
+
+// Global UX: ESC orqali modallarni yopish va Ctrl+K qidiruv
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.querySelectorAll(".modal-overlay.open").forEach(m => m.classList.remove("open"));
+    if (state.selectedRollId) {
+      state.selectedRollId = null;
+      renderRollTracker();
+      render7StageConveyor();
+    }
+  }
+
+  // Ctrl + K yoki Cmd + K orqali qidiruvni faollashtirish
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    const activeSearch = document.querySelector(".table-container-card:not([style*='display: none']) .search-pill input") 
+      || document.querySelector(".search-pill input");
+    if (activeSearch) {
+      activeSearch.focus();
+      activeSearch.select();
+    }
+  }
+});
+
+// Modal foniga (backdrop) bosilganda oynani yopish
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.classList && e.target.classList.contains("modal-overlay")) {
+    e.target.classList.remove("open");
+  }
+});
 
 function handleSearch(val) {
   state.searchQuery = val;

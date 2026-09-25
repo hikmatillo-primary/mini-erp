@@ -510,6 +510,7 @@
             <div class="search-pill">
               <span>🔍</span>
               <input type="text" placeholder="Xomashyoni qidirish..." oninput="handleSearch(this.value)">
+              <span class="kbd-badge">Ctrl K</span>
             </div>
             <button class="pill-action-btn btn-primary" onclick="openRawInboundModal()">+ Kirim Qilish</button>
           </div>
@@ -616,6 +617,7 @@
             <div class="search-pill">
               <span>🔍</span>
               <input type="text" placeholder="Model yoki SKU qidirish..." oninput="handleSearch(this.value)">
+              <span class="kbd-badge">Ctrl K</span>
             </div>
           </div>
         </div>
@@ -728,6 +730,7 @@
             <div class="search-pill">
               <span>🔍</span>
               <input type="text" placeholder="Do'kon nomi yoki telefon..." oninput="handleClientSearch(this.value)">
+              <span class="kbd-badge">Ctrl K</span>
             </div>
           </div>
         </div>
@@ -1306,8 +1309,12 @@
           <div id="pay-client-info" style="font-size:13px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; margin-bottom:14px; color:#1e40af;">
           </div>
           <div class="form-group">
-            <label class="form-label">Qabul qilinayotgan summa (so'm):</label>
-            <input type="number" id="pay-amount" class="form-control" min="1" step="any" placeholder="Masalan: 2500000" required>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label class="form-label" style="margin-bottom:0;">Qabul qilinayotgan summa (so'm):</label>
+              <button type="button" class="quick-chip-btn" id="btn-quick-full-debt" onclick="fillFullDebt()" style="display:none;">To'liq qarzni kiritish ⚡</button>
+            </div>
+            <input type="number" id="pay-amount" class="form-control" min="1" step="any" placeholder="Masalan: 2500000" oninput="onPayAmountInput()" required>
+            <div id="pay-amount-live-text" style="font-size:12px; color:#059669; font-weight:600; margin-top:4px; display:none;"></div>
           </div>
           <div class="form-group">
             <label class="form-label">To'lov shakli:</label>
