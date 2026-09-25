@@ -2,7 +2,7 @@
  * Ro'mol ishlab chiqarish mini-ERP - Boltshift Bar Chart & Modular State (app.js)
  */
 
-const STATE_VERSION = "v11_rich_demo_seh";
+const STATE_VERSION = "v12_clients_oldi_berdi";
 
 const DEFAULT_APP_DATA = {
   rawMaterials: [
@@ -252,6 +252,156 @@ const DEFAULT_APP_DATA = {
       description: "Xomashyo kirimi: +150 metr \"Shifon 'Zumrad' keng rulon\" (22,000 so'mdan). Yangi o'rtacha tannarx: 22,000 so'm/metr.",
       user: "Omborchi"
     }
+  ],
+  clients: [
+    {
+      id: "cli-1",
+      name: "Gulbahor Butik",
+      contactPerson: "Gulbahor opa",
+      phone: "+998 90 123-45-67",
+      address: "Toshkent sh., Chorsu bozori, 4-qator 12-do'kon",
+      balance: 8500000,
+      totalPurchased: 18500000,
+      totalPaid: 10000000,
+      lastActivity: "2026-09-25 15:20",
+      transactions: [
+        {
+          id: "tx-101",
+          date: "2026-09-20 11:30",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (160 dona)",
+          amount: 7200000,
+          paid: 4000000,
+          debtChange: 3200000,
+          balanceAfter: 3200000,
+          paymentMethod: "Naqd pul",
+          notes: "Boshlang'ich buyurtma yuborildi"
+        },
+        {
+          id: "tx-102",
+          date: "2026-09-23 16:45",
+          type: "sale",
+          title: "Klassik Zumrad (200 dona) + Atlas Gullik (50 dona)",
+          amount: 10900000,
+          paid: 3000000,
+          debtChange: 7900000,
+          balanceAfter: 11100000,
+          paymentMethod: "Aralash",
+          notes: "Katta partiya yetkazildi"
+        },
+        {
+          id: "tx-103",
+          date: "2026-09-25 15:20",
+          type: "payment",
+          title: "Qisman qarz to'lovi",
+          amount: 2600000,
+          paid: 2600000,
+          debtChange: -2600000,
+          balanceAfter: 8500000,
+          paymentMethod: "Karta orqali (Click / Payme)",
+          notes: "Bank ilovasi orqali o'tkazildi"
+        }
+      ]
+    },
+    {
+      id: "cli-2",
+      name: "Nafis Ro'mol Ulgurji",
+      contactPerson: "Otabek aka",
+      phone: "+998 93 456-78-90",
+      address: "Qo'qon sh., Yangi bozor, Ulgurji savdo rastasi",
+      balance: 0,
+      totalPurchased: 12000000,
+      totalPaid: 12000000,
+      lastActivity: "2026-09-24 17:00",
+      transactions: [
+        {
+          id: "tx-201",
+          date: "2026-09-21 14:00",
+          type: "sale",
+          title: "Atlas Gullik Shifon (200 dona)",
+          amount: 7600000,
+          paid: 7600000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Naqd pul",
+          notes: "Yuk olishda to'liq to'landi"
+        },
+        {
+          id: "tx-202",
+          date: "2026-09-24 17:00",
+          type: "sale",
+          title: "Atlas Gullik Shifon (115 dona)",
+          amount: 4400000,
+          paid: 4400000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Perechisleniye",
+          notes: "Bank hisob raqamidan to'landi"
+        }
+      ]
+    },
+    {
+      id: "cli-3",
+      name: "Atlas Savdo",
+      contactPerson: "Madina Karimova",
+      phone: "+998 97 789-01-23",
+      address: "Samarqand sh., Registon savdo majmuasi",
+      balance: 4200000,
+      totalPurchased: 7600000,
+      totalPaid: 3400000,
+      lastActivity: "2026-09-24 12:15",
+      transactions: [
+        {
+          id: "tx-301",
+          date: "2026-09-18 10:20",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (80 dona)",
+          amount: 3600000,
+          paid: 2000000,
+          debtChange: 1600000,
+          balanceAfter: 1600000,
+          paymentMethod: "Naqd pul",
+          notes: "Birinchi buyurtma"
+        },
+        {
+          id: "tx-302",
+          date: "2026-09-24 12:15",
+          type: "sale",
+          title: "Atlas Gullik Shifon (105 dona)",
+          amount: 4000000,
+          paid: 1400000,
+          debtChange: 2600000,
+          balanceAfter: 4200000,
+          paymentMethod: "Karta orqali",
+          notes: "Qoldiq 10 kunda beriladi"
+        }
+      ]
+    },
+    {
+      id: "cli-4",
+      name: "Hilol Ro'mollari",
+      contactPerson: "Jamshid aka",
+      phone: "+998 91 333-22-11",
+      address: "Andijon sh., Eski shahar bozori",
+      balance: 0,
+      totalPurchased: 5400000,
+      totalPaid: 5400000,
+      lastActivity: "2026-09-22 18:30",
+      transactions: [
+        {
+          id: "tx-401",
+          date: "2026-09-22 18:30",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (120 dona)",
+          amount: 5400000,
+          paid: 5400000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Naqd pul",
+          notes: "To'liq naqd to'langan"
+        }
+      ]
+    }
   ]
 };
 
@@ -262,12 +412,16 @@ let state = {
   finishedGoods: [],
   financials: { ...DEFAULT_APP_DATA.financials },
   historyLogs: [],
+  clients: [],
   activeTab: "dashboard",
   conveyorSubTab: "pipeline",
   rawFilter: "all",
+  clientFilter: "all",
   searchQuery: "",
+  clientSearchQuery: "",
   selectedRollId: null,
-  selectedFinanceBomId: ""
+  selectedFinanceBomId: "",
+  selectedStatementClientId: null
 };
 
 // Keshni tekshirish va ma'lumotlarni yuklash (Sahifa yangilanganda ma'lumot yo'qolmasligi kafolatlangan)
@@ -285,6 +439,7 @@ function loadInitialState() {
       state.finishedGoods = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.finishedGoods));
       state.financials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
       state.historyLogs = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
+      state.clients = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.clients));
       saveState();
       return;
     }
@@ -298,6 +453,7 @@ function loadInitialState() {
       ? parsed.financials
       : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
     state.historyLogs = Array.isArray(parsed.historyLogs) ? parsed.historyLogs : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
+    state.clients = Array.isArray(parsed.clients) ? parsed.clients : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.clients));
   } catch (e) {
     console.error("Lokal ma'lumotlarni o'qishda xatolik:", e);
   }
@@ -312,7 +468,8 @@ function saveState() {
       batches: state.batches,
       finishedGoods: state.finishedGoods,
       financials: state.financials,
-      historyLogs: state.historyLogs
+      historyLogs: state.historyLogs,
+      clients: state.clients
     }));
   } catch (e) {
     console.error("Lokal xotiraga saqlashda xatolik:", e);
@@ -329,6 +486,7 @@ function resetDemoData() {
     state.finishedGoods = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.finishedGoods));
     state.financials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
     state.historyLogs = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
+    state.clients = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.clients));
     saveState();
     renderApp();
     showToast("Namunaviy demo ma'lumotlar qayta tiklandi!", "info");
@@ -380,13 +538,14 @@ function switchTab(tabId) {
     conveyor: "🔄 Konveyer & BoM (7 Bosqichli Texnologik Zanjir)",
     raw_materials: "🧵 Xomashyo Ombori va Xaridlar",
     finished_goods: "📦 Tayyor Ro'mollar Ombori va Sotuv",
+    clients: "🤝 Mijozlar Boshqaruvi va Oldi-Berdi (Nasiyalar & To'lovlar)",
     finance: "💵 Moliya, Tannarx va Foyda/Zarar (P&L Tahlili)",
     history: "📜 Harakatlar Qaydnomasi va Tarix"
   };
   const elTitle = document.getElementById("topbar-current-tab-title");
   if (elTitle) elTitle.textContent = tabTitles[tabId] || tabId;
 
-  const tabs = ["dashboard", "conveyor", "raw_materials", "finished_goods", "finance", "history"];
+  const tabs = ["dashboard", "conveyor", "raw_materials", "finished_goods", "clients", "finance", "history"];
   tabs.forEach(t => {
     const el = document.getElementById(`tab-content-${t}`);
     if (el) el.style.display = (t === tabId) ? "block" : "none";
@@ -419,6 +578,7 @@ function renderApp() {
   renderConveyorKPIs();
   renderRawMaterialsKPIs();
   renderFinishedGoodsKPIs();
+  renderClientsKPIs();
   renderFinanceKPIs();
   renderHistoryKPIs();
 
@@ -430,6 +590,8 @@ function renderApp() {
     renderRawMaterialsTable();
   } else if (state.activeTab === "finished_goods") {
     renderFinishedGoodsTable();
+  } else if (state.activeTab === "clients") {
+    renderClientsTable();
   } else if (state.activeTab === "finance") {
     renderFinanceView();
   } else if (state.activeTab === "history") {
@@ -441,6 +603,18 @@ function updateBadges() {
   const activeBatchesCount = state.batches.filter(b => b.currentStage !== "completed").length;
   const conveyorBadge = document.getElementById("badge-conveyor-count");
   if (conveyorBadge) conveyorBadge.textContent = activeBatchesCount;
+
+  // Mijozlar nasiya nishoni
+  const debtors = (state.clients || []).filter(c => (c.balance || 0) > 0);
+  const clientBadge = document.getElementById("badge-clients-debt");
+  if (clientBadge) {
+    if (debtors.length > 0) {
+      clientBadge.style.display = "inline-flex";
+      clientBadge.textContent = debtors.length + " ta nasiya";
+    } else {
+      clientBadge.style.display = "none";
+    }
+  }
 }
 
 // -------------------------------------------------------------
@@ -1383,25 +1557,112 @@ function renderFinishedGoodsTable() {
   `).join("");
 }
 
-function openSaleModal(goodsId) {
+function openSaleModal(goodsId, preselectedClientId = null) {
   const item = state.finishedGoods.find(g => g.id === goodsId) || state.finishedGoods[0];
   if (!item) return;
 
   document.getElementById("sale-goods-id").value = item.id;
   document.getElementById("sale-goods-name").textContent = `${item.name} (${item.size})`;
   document.getElementById("sale-goods-stock").textContent = `${item.stock} dona`;
-  document.getElementById("sale-quantity").value = 10;
-  document.getElementById("sale-quantity").max = item.stock;
+  const elPrice = document.getElementById("sale-goods-price");
+  if (elPrice) elPrice.textContent = `${(item.price).toLocaleString()} so'm/dona`;
 
+  const qtyInput = document.getElementById("sale-quantity");
+  qtyInput.value = item.stock >= 10 ? 10 : item.stock;
+  qtyInput.max = item.stock;
+
+  // Mijozlar ro'yxatini to'ldirish
+  const clientSelect = document.getElementById("sale-client-select");
+  if (clientSelect) {
+    let html = `<option value="">-- Ro'yxatdan tanlang --</option>`;
+    (state.clients || []).forEach(c => {
+      const debtText = (c.balance || 0) > 0 ? ` (Qarz: ${(c.balance).toLocaleString()} so'm)` : ` (Qarzi yo'q)`;
+      const sel = (preselectedClientId === c.id) ? "selected" : "";
+      html += `<option value="${c.id}" ${sel}>${c.name} - ${c.contactPerson}${debtText}</option>`;
+    });
+    html += `<option value="new">+ Yangi xaridor / do'kon (qo'lda kiritish)</option>`;
+    clientSelect.innerHTML = html;
+  }
+
+  // To'lov shakli
+  const payTypeSelect = document.getElementById("sale-payment-type");
+  if (payTypeSelect) payTypeSelect.value = "full_cash";
+  
+  const customGroup = document.getElementById("sale-custom-client-group");
+  if (customGroup) customGroup.style.display = "none";
+  const customInput = document.getElementById("sale-custom-client");
+  if (customInput) customInput.value = "";
+
+  const partialGroup = document.getElementById("sale-partial-amount-group");
+  if (partialGroup) partialGroup.style.display = "none";
+  const partialInput = document.getElementById("sale-paid-amount");
+  if (partialInput) partialInput.value = "";
+
+  calculateSaleTotal();
   document.getElementById("modal-sale").classList.add("open");
+}
+
+function onSaleClientChange() {
+  const select = document.getElementById("sale-client-select");
+  const customGroup = document.getElementById("sale-custom-client-group");
+  if (customGroup) {
+    customGroup.style.display = (select.value === "new") ? "block" : "none";
+  }
+  calculateSaleTotal();
+}
+
+function onSalePaymentTypeChange() {
+  const payType = document.getElementById("sale-payment-type").value;
+  const partialGroup = document.getElementById("sale-partial-amount-group");
+  if (partialGroup) {
+    partialGroup.style.display = (payType === "partial") ? "block" : "none";
+  }
+  calculateSaleTotal();
+}
+
+function calculateSaleTotal() {
+  const goodsId = document.getElementById("sale-goods-id").value;
+  const item = state.finishedGoods.find(g => g.id === goodsId);
+  const qty = parseInt(document.getElementById("sale-quantity").value) || 0;
+  const payType = document.getElementById("sale-payment-type").value;
+  const partialInput = document.getElementById("sale-paid-amount");
+  const calcBox = document.getElementById("sale-calc-box");
+
+  if (!item || !calcBox) return;
+
+  const total = qty * item.price;
+  let paid = total;
+  let debt = 0;
+
+  if (payType === "debt") {
+    paid = 0;
+    debt = total;
+  } else if (payType === "partial") {
+    const pVal = parseFloat(partialInput.value) || 0;
+    paid = Math.min(pVal, total);
+    debt = total - paid;
+  }
+
+  calcBox.innerHTML = `
+    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+      <span>Jami summa:</span>
+      <strong>${qty} dona &times; ${(item.price).toLocaleString()} = ${(total).toLocaleString()} so'm</strong>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:4px; color:${paid > 0 ? '#059669' : '#64748b'};">
+      <span>To'lanayotgan naqd/karta:</span>
+      <strong>${(paid).toLocaleString()} so'm</strong>
+    </div>
+    <div style="display:flex; justify-content:space-between; color:${debt > 0 ? '#dc2626' : '#059669'}; font-weight:700;">
+      <span>Nasiyaga (Qarzga) yozilmoqda:</span>
+      <span>${debt > 0 ? "+ " + (debt).toLocaleString() + " so'm (Nasiya)" : "0 so'm (To'liq to'landi)"}</span>
+    </div>
+  `;
 }
 
 function submitSale(e) {
   e.preventDefault();
   const goodsId = document.getElementById("sale-goods-id").value;
   const quantity = parseInt(document.getElementById("sale-quantity").value);
-  const clientName = document.getElementById("sale-client").value.trim() || "Do'kon / Xaridor";
-
   const item = state.finishedGoods.find(g => g.id === goodsId);
   if (!item || isNaN(quantity) || quantity <= 0) return;
 
@@ -1410,9 +1671,90 @@ function submitSale(e) {
     return;
   }
 
-  item.stock -= quantity;
+  const clientId = document.getElementById("sale-client-select").value;
+  let clientName = "";
+  let clientObj = null;
+
+  const now = new Date().toLocaleString("uz-UZ", {
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit"
+  }).replace(",", "");
+
+  if (clientId === "new") {
+    clientName = document.getElementById("sale-custom-client").value.trim() || "Yangi xaridor";
+    clientObj = {
+      id: "cli-" + Date.now().toString().slice(-4),
+      name: clientName,
+      contactPerson: "Xaridor",
+      phone: "-",
+      address: "-",
+      balance: 0,
+      totalPurchased: 0,
+      totalPaid: 0,
+      lastActivity: now,
+      transactions: []
+    };
+    state.clients.push(clientObj);
+  } else if (clientId) {
+    clientObj = state.clients.find(c => c.id === clientId);
+    clientName = clientObj ? clientObj.name : "Xaridor";
+  } else {
+    clientName = "Umumiy xaridor";
+  }
+
   const totalAmount = quantity * item.price;
-  addLog("sale_out", `Chiqim: ${quantity} dona "${item.name}" (${clientName}) ga berildi. Jami: ${totalAmount.toLocaleString()} so'm.`);
+  const payType = document.getElementById("sale-payment-type").value;
+  let paidAmount = totalAmount;
+  let debtAmount = 0;
+
+  if (payType === "debt") {
+    paidAmount = 0;
+    debtAmount = totalAmount;
+  } else if (payType === "partial") {
+    const pVal = parseFloat(document.getElementById("sale-paid-amount").value) || 0;
+    paidAmount = Math.min(pVal, totalAmount);
+    debtAmount = totalAmount - paidAmount;
+  }
+
+  // Ombor astatkasidan ayirish
+  item.stock -= quantity;
+
+  // Mijoz balansini va akt-sverka harakatini yangilash
+  if (clientObj) {
+    clientObj.totalPurchased = (clientObj.totalPurchased || 0) + totalAmount;
+    clientObj.totalPaid = (clientObj.totalPaid || 0) + paidAmount;
+    clientObj.balance = (clientObj.balance || 0) + debtAmount;
+    clientObj.lastActivity = now;
+
+    let paymentMethodLabel = "Naqd pul";
+    if (payType === "debt") paymentMethodLabel = "Nasiya (To'lanmadi)";
+    else if (payType === "partial") paymentMethodLabel = `Qisman to'lov (${(paidAmount).toLocaleString()} so'm)`;
+
+    if (!Array.isArray(clientObj.transactions)) clientObj.transactions = [];
+    clientObj.transactions.push({
+      id: "tx-" + Date.now().toString().slice(-5),
+      date: now,
+      type: "sale",
+      title: `${item.name} (${quantity} dona)`,
+      amount: totalAmount,
+      paid: paidAmount,
+      debtChange: debtAmount,
+      balanceAfter: clientObj.balance,
+      paymentMethod: paymentMethodLabel,
+      notes: debtAmount > 0 ? `${(debtAmount).toLocaleString()} so'm nasiyaga qoldi` : "To'liq to'landi"
+    });
+  }
+
+  // Moliyaviy ko'rsatkichlarni yangilash
+  state.financials.monthlySalesVolume = (state.financials.monthlySalesVolume || 0) + quantity;
+  state.financials.monthlyRevenue = (state.financials.monthlyRevenue || 0) + totalAmount;
+  const totalExpenses = (state.financials.totalRawMaterialsCost + state.financials.totalLaborCost + state.financials.totalOverheadCost);
+  state.financials.netProfit = state.financials.monthlyRevenue - totalExpenses;
+  state.financials.profitMargin = parseFloat(((state.financials.netProfit / state.financials.monthlyRevenue) * 100).toFixed(1));
+
+  // Harakatlar jurnaliga yozish
+  const debtNote = debtAmount > 0 ? ` (Nasiyaga: ${(debtAmount).toLocaleString()} so'm)` : " (To'liq to'landi)";
+  addLog("sale_out", `Chiqim: ${quantity} dona "${item.name}" (${clientName}) ga berildi. Jami: ${(totalAmount).toLocaleString()} so'm${debtNote}.`);
 
   saveState();
   closeModal("modal-sale");
@@ -1433,6 +1775,461 @@ function exportFinishedGoodsCSV() {
   a.download = `Tayyor_romollar_astatkasi_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   showToast("Astatka vedomosti CSV formatida yuklab olindi", "info");
+}
+
+// -------------------------------------------------------------
+// 4.5. MIJOZLAR & OLDI-BERDI (NASIYA, TO'LOVLAR VA AKT-SVERKA)
+// -------------------------------------------------------------
+function renderClientsKPIs() {
+  const clients = state.clients || [];
+
+  const totalDebt = clients.reduce((sum, c) => sum + Math.max(0, c.balance || 0), 0);
+  const totalPaid = clients.reduce((sum, c) => sum + (c.totalPaid || 0), 0);
+  const debtors = clients.filter(c => (c.balance || 0) > 0);
+
+  // Eng katta xaridor
+  let topClient = null;
+  if (clients.length > 0) {
+    topClient = [...clients].sort((a, b) => (b.totalPurchased || 0) - (a.totalPurchased || 0))[0];
+  }
+
+  const elDebt = document.getElementById("client-kpi-debt");
+  if (elDebt) elDebt.textContent = (totalDebt / 1000000).toFixed(1) + " mln so'm";
+
+  const elDebtCount = document.getElementById("client-kpi-debt-count");
+  if (elDebtCount) elDebtCount.textContent = debtors.length + " ta do'konda";
+
+  const elDebtSub = document.getElementById("client-kpi-debt-sub");
+  if (elDebtSub) elDebtSub.textContent = debtors.length > 0 ? "Mijozlardan kutilayotgan nasiya" : "Barcha hisob-kitoblar toza!";
+
+  const elPaid = document.getElementById("client-kpi-paid");
+  if (elPaid) elPaid.textContent = (totalPaid / 1000000).toFixed(1) + " mln so'm";
+
+  const elCount = document.getElementById("client-kpi-count");
+  if (elCount) elCount.textContent = clients.length + " ta";
+
+  const elCountSub = document.getElementById("client-kpi-count-sub");
+  if (elCountSub) elCountSub.textContent = `${debtors.length} ta nasiya, ${clients.length - debtors.length} ta toza`;
+
+  const elTop = document.getElementById("client-kpi-top");
+  if (elTop) {
+    elTop.textContent = topClient ? topClient.name : "-";
+  }
+  const elTopSub = document.getElementById("client-kpi-top-sub");
+  if (elTopSub) {
+    elTopSub.textContent = topClient ? `Jami xarid: ${((topClient.totalPurchased || 0) / 1000000).toFixed(1)} mln so'm` : "Xaridlar mavjud emas";
+  }
+}
+
+function setClientFilter(filter) {
+  state.clientFilter = filter;
+  ["all", "debtors", "cleared"].forEach(f => {
+    const btn = document.getElementById(`filter-client-${f}`);
+    if (btn) btn.classList.toggle("active", f === filter);
+  });
+  renderClientsTable();
+}
+
+function handleClientSearch(val) {
+  state.clientSearchQuery = (val || "").trim().toLowerCase();
+  renderClientsTable();
+}
+
+function renderClientsTable() {
+  const tbody = document.getElementById("clients-table-body");
+  if (!tbody) return;
+
+  let list = state.clients || [];
+
+  // Filtrlash
+  if (state.clientFilter === "debtors") {
+    list = list.filter(c => (c.balance || 0) > 0);
+  } else if (state.clientFilter === "cleared") {
+    list = list.filter(c => (c.balance || 0) <= 0);
+  }
+
+  // Qidiruv
+  if (state.clientSearchQuery) {
+    const q = state.clientSearchQuery;
+    list = list.filter(c => 
+      (c.name || "").toLowerCase().includes(q) ||
+      (c.contactPerson || "").toLowerCase().includes(q) ||
+      (c.phone || "").toLowerCase().includes(q) ||
+      (c.address || "").toLowerCase().includes(q)
+    );
+  }
+
+  if (list.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="text-align:center; padding:45px 20px; color:#94a3b8;">
+          <div style="font-size:32px; margin-bottom:6px;">🤝</div>
+          <strong style="color:#0f172a; font-size:15px;">Mijozlar topilmadi</strong>
+          <div style="font-size:13px; color:#64748b; margin-top:4px;">Qidiruv mezonlariga mos xaridor yoki do'kon mavjud emas.</div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = list.map(c => {
+    const bal = c.balance || 0;
+    let balanceBadge = "";
+    if (bal > 0) {
+      balanceBadge = `<span class="badge-debt-red">⚠️ ${(bal).toLocaleString()} so'm</span>`;
+    } else if (bal === 0) {
+      balanceBadge = `<span class="badge-debt-green">✓ Toza (0 so'm)</span>`;
+    } else {
+      balanceBadge = `<span style="background:#eff6ff; color:#1d4ed8; padding:3px 9px; border-radius:9999px; font-weight:700; font-size:12px;">+ Avans (${Math.abs(bal).toLocaleString()} so'm)</span>`;
+    }
+
+    return `
+      <tr>
+        <td>
+          <strong style="color:#0f172a; font-size:14.5px;">${c.name}</strong>
+        </td>
+        <td>
+          <div style="font-weight:600; color:#334155;">${c.contactPerson || "-"}</div>
+          <div style="font-size:12px; color:#64748b; font-family:monospace;">${c.phone || "-"}</div>
+        </td>
+        <td>
+          <span style="font-size:13px; color:#475569;">${c.address || "-"}</span>
+        </td>
+        <td>
+          <strong style="color:#0f172a;">${(c.totalPurchased || 0).toLocaleString()} so'm</strong>
+        </td>
+        <td>
+          <span style="color:#059669; font-weight:600;">${(c.totalPaid || 0).toLocaleString()} so'm</span>
+        </td>
+        <td>
+          ${balanceBadge}
+        </td>
+        <td>
+          <span style="font-size:12px; color:#64748b;">${c.lastActivity || "-"}</span>
+        </td>
+        <td>
+          <div style="display:flex; gap:6px;">
+            <button class="pill-action-btn" style="padding:5px 10px; font-size:12px; background:#ecfdf5; color:#059669; border-color:#a7f3d0;" onclick="openClientPaymentModal('${c.id}')" title="To'lov qabul qilish">💵 To'lov</button>
+            <button class="pill-action-btn" style="padding:5px 10px; font-size:12px;" onclick="viewClientStatement('${c.id}')" title="Akt-sverkani ko'rish">📑 Sverka</button>
+            <button class="pill-action-btn btn-primary" style="padding:5px 10px; font-size:12px;" onclick="openSaleForClient('${c.id}')" title="Ushbu mijozga tovar berish">📦 Sotuv</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function openSaleForClient(clientId) {
+  const firstItem = state.finishedGoods[0];
+  if (!firstItem) {
+    alert("Omborda tayyor mahsulot yo'q!");
+    return;
+  }
+  openSaleModal(firstItem.id, clientId);
+}
+
+function openNewClientModal() {
+  document.getElementById("newcli-name").value = "";
+  document.getElementById("newcli-person").value = "";
+  document.getElementById("newcli-phone").value = "";
+  document.getElementById("newcli-address").value = "";
+  document.getElementById("newcli-initial-debt").value = 0;
+  document.getElementById("modal-new-client").classList.add("open");
+}
+
+function submitNewClient(e) {
+  e.preventDefault();
+  const name = document.getElementById("newcli-name").value.trim();
+  const person = document.getElementById("newcli-person").value.trim();
+  const phone = document.getElementById("newcli-phone").value.trim();
+  const address = document.getElementById("newcli-address").value.trim();
+  const initialDebt = parseFloat(document.getElementById("newcli-initial-debt").value) || 0;
+
+  if (!name) return;
+
+  const now = new Date().toLocaleString("uz-UZ", {
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit"
+  }).replace(",", "");
+
+  const newClient = {
+    id: "cli-" + Date.now().toString().slice(-4),
+    name: name,
+    contactPerson: person || "Mas'ul xodim",
+    phone: phone || "-",
+    address: address || "-",
+    balance: initialDebt,
+    totalPurchased: initialDebt,
+    totalPaid: 0,
+    lastActivity: now,
+    transactions: initialDebt > 0 ? [{
+      id: "tx-" + Date.now().toString().slice(-5),
+      date: now,
+      type: "sale",
+      title: "Boshlang'ich qarz balansi",
+      amount: initialDebt,
+      paid: 0,
+      debtChange: initialDebt,
+      balanceAfter: initialDebt,
+      paymentMethod: "Boshlang'ich qoldiq",
+      notes: "Eski hisob-kitobdan o'tkazilgan qarz"
+    }] : []
+  };
+
+  state.clients.unshift(newClient);
+  addLog("client_add", `Yangi mijoz qo'shildi: "${name}" (${person || 'Mijoz'}). Boshlang'ich qarz: ${(initialDebt).toLocaleString()} so'm.`);
+
+  saveState();
+  closeModal("modal-new-client");
+  renderApp();
+  showToast(`"${name}" mijozlar ro'yxatiga qo'shildi!`, "success");
+}
+
+function openClientPaymentModal(preselectedClientId = null) {
+  const select = document.getElementById("pay-client-select");
+  if (!select) return;
+
+  let html = `<option value="">-- Mijozni tanlang --</option>`;
+  (state.clients || []).forEach(c => {
+    const sel = (preselectedClientId === c.id) ? "selected" : "";
+    const debtStr = (c.balance || 0) > 0 ? ` (Qarz: ${(c.balance).toLocaleString()} so'm)` : ` (Qarzi yo'q)`;
+    html += `<option value="${c.id}" ${sel}>${c.name} - ${c.contactPerson}${debtStr}</option>`;
+  });
+  select.innerHTML = html;
+
+  if (preselectedClientId) {
+    select.value = preselectedClientId;
+  }
+  onPaymentClientSelectChange();
+
+  document.getElementById("pay-notes").value = "";
+  document.getElementById("modal-client-payment").classList.add("open");
+}
+
+function onPaymentClientSelectChange() {
+  const clientId = document.getElementById("pay-client-select").value;
+  const client = (state.clients || []).find(c => c.id === clientId);
+  const infoBox = document.getElementById("pay-client-info");
+  const amountInput = document.getElementById("pay-amount");
+
+  if (!client) {
+    if (infoBox) infoBox.style.display = "none";
+    if (amountInput) amountInput.value = "";
+    return;
+  }
+
+  if (infoBox) {
+    infoBox.style.display = "block";
+    const bal = client.balance || 0;
+    infoBox.innerHTML = `
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <span>Do'kon / Mas'ul:</span>
+        <strong>${client.name} (${client.contactPerson})</strong>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <span>Jami xarid hajmi:</span>
+        <span>${(client.totalPurchased || 0).toLocaleString()} so'm</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+        <span>Jami to'langan:</span>
+        <span style="color:#059669; font-weight:600;">${(client.totalPaid || 0).toLocaleString()} so'm</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; border-top:1px solid #bfdbfe; padding-top:4px; font-size:14px;">
+        <span>Hozirgi qarz (Bizning haqqimiz):</span>
+        <strong style="color:${bal > 0 ? '#dc2626' : '#059669'};">${bal > 0 ? (bal).toLocaleString() + " so'm" : "0 so'm (Qarzi yo'q)"}</strong>
+      </div>
+    `;
+  }
+
+  if (amountInput) {
+    amountInput.value = client.balance > 0 ? client.balance : "";
+  }
+}
+
+function submitClientPayment(e) {
+  e.preventDefault();
+  const clientId = document.getElementById("pay-client-select").value;
+  const amount = parseFloat(document.getElementById("pay-amount").value);
+  const method = document.getElementById("pay-method").value;
+  const notes = document.getElementById("pay-notes").value.trim() || "Qarz to'lovi";
+
+  const client = (state.clients || []).find(c => c.id === clientId);
+  if (!client || isNaN(amount) || amount <= 0) {
+    alert("Iltimos, mijozni va to'g'ri to'lov summasini kiriting!");
+    return;
+  }
+
+  client.balance = (client.balance || 0) - amount;
+  client.totalPaid = (client.totalPaid || 0) + amount;
+
+  const now = new Date().toLocaleString("uz-UZ", {
+    year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit"
+  }).replace(",", "");
+
+  client.lastActivity = now;
+
+  if (!Array.isArray(client.transactions)) client.transactions = [];
+  client.transactions.push({
+    id: "tx-" + Date.now().toString().slice(-5),
+    date: now,
+    type: "payment",
+    title: "To'lov qabul qilindi",
+    amount: amount,
+    paid: amount,
+    debtChange: -amount,
+    balanceAfter: client.balance,
+    paymentMethod: method,
+    notes: notes
+  });
+
+  addLog("payment_in", `To'lov: "${client.name}" dan ${(amount).toLocaleString()} so'm qabul qilindi (${method}). Qoldiq qarz: ${(client.balance).toLocaleString()} so'm.`);
+
+  saveState();
+  closeModal("modal-client-payment");
+  renderApp();
+  showToast(`"${client.name}" dan ${(amount).toLocaleString()} so'm to'lov qabul qilindi!`, "success");
+}
+
+function viewClientStatement(clientId) {
+  const client = (state.clients || []).find(c => c.id === clientId);
+  if (!client) return;
+
+  state.selectedStatementClientId = clientId;
+  const content = document.getElementById("client-statement-content");
+  if (!content) return;
+
+  const bal = client.balance || 0;
+  const statusBadge = bal > 0 
+    ? `<span class="badge-debt-red">⚠️ Qarz: ${(bal).toLocaleString()} so'm</span>`
+    : `<span class="badge-debt-green">✓ Hisob toza (0 so'm)</span>`;
+
+  let rows = "";
+  if (!client.transactions || client.transactions.length === 0) {
+    rows = `<tr><td colspan="7" style="text-align:center; padding:20px; color:#94a3b8;">Hali hech qanday harakat qayd etilmagan</td></tr>`;
+  } else {
+    rows = client.transactions.map((tx) => {
+      const isSale = tx.type === "sale";
+      const badge = isSale 
+        ? `<span style="background:#eff6ff; color:#1e40af; padding:2px 8px; border-radius:9999px; font-size:11.5px; font-weight:600;">📦 Sotuv</span>`
+        : `<span style="background:#ecfdf5; color:#059669; padding:2px 8px; border-radius:9999px; font-size:11.5px; font-weight:600;">💵 To'lov</span>`;
+      
+      const debtColor = tx.debtChange > 0 ? "#dc2626" : (tx.debtChange < 0 ? "#059669" : "#64748b");
+      const debtSign = tx.debtChange > 0 ? "+" : "";
+
+      return `
+        <tr>
+          <td style="font-size:12.5px; color:#64748b;">${tx.date}</td>
+          <td>${badge} <strong style="font-size:13px; color:#0f172a; margin-left:4px;">${tx.title}</strong></td>
+          <td style="font-size:12.5px; color:#475569;">${tx.paymentMethod || "-"}</td>
+          <td style="text-align:right; font-weight:600; color:#0f172a;">${(tx.amount || 0).toLocaleString()}</td>
+          <td style="text-align:right; font-weight:600; color:#059669;">${(tx.paid || 0).toLocaleString()}</td>
+          <td style="text-align:right; font-weight:700; color:${debtColor};">${debtSign}${(tx.debtChange || 0).toLocaleString()}</td>
+          <td style="text-align:right; font-weight:700; color:#0f172a;">${(tx.balanceAfter || 0).toLocaleString()}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  content.innerHTML = `
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; padding:18px; margin-bottom:18px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+          <h2 style="font-size:18px; font-weight:800; color:#0f172a; margin-bottom:4px;">${client.name}</h2>
+          <div style="font-size:13px; color:#475569;">
+            Mas'ul: <strong>${client.contactPerson || "-"}</strong> | Tel: <strong>${client.phone || "-"}</strong>
+          </div>
+          <div style="font-size:12.5px; color:#64748b; margin-top:2px;">
+            Manzil: ${client.address || "-"}
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:12px; color:#64748b; margin-bottom:4px;">Joriy hisob holati:</div>
+          <div>${statusBadge}</div>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid #e2e8f0;">
+        <div style="background:#ffffff; padding:10px 14px; border-radius:10px; border:1px solid #eaedf2;">
+          <div style="font-size:11.5px; color:#64748b; font-weight:600;">JAMI XARID QILINDI</div>
+          <div style="font-size:16px; font-weight:800; color:#0f172a; margin-top:2px;">${(client.totalPurchased || 0).toLocaleString()} so'm</div>
+        </div>
+        <div style="background:#ffffff; padding:10px 14px; border-radius:10px; border:1px solid #eaedf2;">
+          <div style="font-size:11.5px; color:#64748b; font-weight:600;">JAMI TO'LANDI</div>
+          <div style="font-size:16px; font-weight:800; color:#059669; margin-top:2px;">${(client.totalPaid || 0).toLocaleString()} so'm</div>
+        </div>
+        <div style="background:#ffffff; padding:10px 14px; border-radius:10px; border:1px solid #eaedf2;">
+          <div style="font-size:11.5px; color:#64748b; font-weight:600;">QARZ QOLDIG'I (HAQQIMIZ)</div>
+          <div style="font-size:16px; font-weight:800; color:${bal > 0 ? '#dc2626' : '#059669'}; margin-top:2px;">${(bal).toLocaleString()} so'm</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:14px; font-weight:700; color:#0f172a; margin-bottom:10px;">
+      Harakatlar va Hisob-Kitoblar Xronologiyasi:
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="clean-table" style="font-size:13px;">
+        <thead>
+          <tr>
+            <th>Sana</th>
+            <th>Harakat / Hujjat</th>
+            <th>To'lov Usuli</th>
+            <th style="text-align:right;">Xarid Summasi</th>
+            <th style="text-align:right;">To'langan</th>
+            <th style="text-align:right;">Qarz O'zgarishi</th>
+            <th style="text-align:right;">Balans Qoldig'i</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById("modal-client-statement").classList.add("open");
+}
+
+function printClientStatement() {
+  window.print();
+}
+
+function exportStatementCSV() {
+  const clientId = state.selectedStatementClientId;
+  const client = (state.clients || []).find(c => c.id === clientId);
+  if (!client) return;
+
+  let csv = `Mijoz: "${client.name}"\nMas'ul: "${client.contactPerson}"\nTelefon: "${client.phone}"\nJoriy qarz: ${client.balance}\n\n`;
+  csv += "Sana,Harakat,TolovUsuli,XaridSummasi,Tolangan,QarzOzgarishi,BalansQoldigi,Izoh\n";
+
+  (client.transactions || []).forEach(tx => {
+    csv += `"${tx.date}","${tx.title}","${tx.paymentMethod || ''}",${tx.amount || 0},${tx.paid || 0},${tx.debtChange || 0},${tx.balanceAfter || 0},"${tx.notes || ''}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Akt_Sverka_${client.name.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  showToast("Akt-sverka CSV formatida yuklandi!", "info");
+}
+
+function exportClientsCSV() {
+  let csv = "Mijoz Nomi,Masul Shaxs,Telefon,Manzil,Jami Xarid,Tolangan,Joriy Qarz,Oxirgi Harakat\n";
+  (state.clients || []).forEach(c => {
+    csv += `"${c.name}","${c.contactPerson}","${c.phone}","${c.address}",${c.totalPurchased || 0},${c.totalPaid || 0},${c.balance || 0},"${c.lastActivity || ''}"\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Mijozlar_va_nasiyalar_hisoboti_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  showToast("Mijozlar hisoboti CSV formatida yuklab olindi", "info");
 }
 
 // -------------------------------------------------------------

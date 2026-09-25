@@ -50,6 +50,12 @@
           <span class="nav-text">Tayyor Ro'mollar</span>
         </button>
 
+        <button class="sidebar-nav-item" data-tab="clients" onclick="switchTab('clients')">
+          <span class="nav-icon">🤝</span>
+          <span class="nav-text">Mijozlar & Oldi-Berdi</span>
+          <span class="sidebar-badge badge-red" id="badge-clients-debt" style="display:none;">0</span>
+        </button>
+
         <button class="sidebar-nav-item" data-tab="finance" onclick="switchTab('finance')">
           <span class="nav-icon">💵</span>
           <span class="nav-text">Moliya & Foyda</span>
@@ -636,6 +642,118 @@
 
 
     <!-- ======================================================== -->
+    <!-- 4.5. MIJOZLAR & OLDI-BERDI (NASIYA VA TO'LOVLAR)          -->
+    <!-- ======================================================== -->
+    <div id="tab-content-clients" style="display: none;">
+      <div class="overview-header">
+        <div class="header-title-box">
+          <h1>Mijozlar Boshqaruvi va Oldi-Berdi (Nasiya & To'lovlar)</h1>
+          <p>Ulgurji xaridorlar va do'konlar bilan o'zaro hisob-kitoblar, nasiya qoldiqlari va akt-sverka</p>
+        </div>
+        <div class="header-actions">
+          <button class="pill-action-btn" onclick="exportClientsCSV()"><span>📑 Sverka Ro'yxati (CSV)</span></button>
+          <button class="pill-action-btn" onclick="openClientPaymentModal()"><span>💵 + To'lov Qabul Qilish</span></button>
+          <button class="pill-action-btn btn-primary" onclick="openNewClientModal()"><span>➕ Yangi Mijoz</span></button>
+        </div>
+      </div>
+
+      <!-- 4 ta KPI kartasi -->
+      <div class="kpi-cards-grid">
+        <div class="kpi-stat-card hero-amber">
+          <div class="kpi-top-row">
+            <span class="kpi-label">Mijozlardagi Nasiyamiz (Haqqimiz)</span>
+            <div class="kpi-icon-circle">⏳</div>
+          </div>
+          <div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-number" id="client-kpi-debt">0 so'm</span>
+              <span class="kpi-pill-badge badge-white" id="client-kpi-debt-count">0 ta do'kon</span>
+            </div>
+            <div class="kpi-bottom-subtext" id="client-kpi-debt-sub">Kutilayotgan to'lovlar</div>
+          </div>
+        </div>
+
+        <div class="kpi-stat-card hero-green">
+          <div class="kpi-top-row">
+            <span class="kpi-label">Jami Qabul Qilingan To'lovlar</span>
+            <div class="kpi-icon-circle">💵</div>
+          </div>
+          <div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-number" id="client-kpi-paid">0 so'm</span>
+              <span class="kpi-pill-badge badge-white">Kirim bo'ldi</span>
+            </div>
+            <div class="kpi-bottom-subtext">Kassa va hisobraqamga tushgan</div>
+          </div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label">Jami Hamkor Mijozlar</span>
+            <div class="kpi-icon-circle blue-soft">🏬</div>
+          </div>
+          <div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-number" id="client-kpi-count">0 ta</span>
+              <span class="kpi-pill-badge badge-blue">Faol</span>
+            </div>
+            <div class="kpi-bottom-subtext" id="client-kpi-count-sub">Do'kon va savdo nuqtalari</div>
+          </div>
+        </div>
+
+        <div class="kpi-stat-card">
+          <div class="kpi-top-row">
+            <span class="kpi-label">Eng Katta Xaridor (Top)</span>
+            <div class="kpi-icon-circle blue-soft" style="background:#eff6ff; color:#1e60ff;">⭐</div>
+          </div>
+          <div>
+            <div class="kpi-number-row">
+              <span class="kpi-big-number" id="client-kpi-top" style="font-size:18px; font-weight:700;">-</span>
+            </div>
+            <div class="kpi-bottom-subtext" id="client-kpi-top-sub">Jami xarid hajmi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jadval kartasi -->
+      <div class="table-container-card" style="margin-top: 18px;">
+        <div class="table-header-bar">
+          <div class="table-title">Mijozlar Ro'yxati va Joriy Balanslar</div>
+          <div class="table-actions-right">
+            <div class="pill-group" style="display:inline-flex; gap:6px; margin-right:12px;">
+              <button class="pill-action-btn active" id="filter-client-all" onclick="setClientFilter('all')">Hammasi</button>
+              <button class="pill-action-btn" id="filter-client-debtors" onclick="setClientFilter('debtors')">⚠️ Qarzdorlar</button>
+              <button class="pill-action-btn" id="filter-client-cleared" onclick="setClientFilter('cleared')">✓ Hisob toza</button>
+            </div>
+            <div class="search-pill">
+              <span>🔍</span>
+              <input type="text" placeholder="Do'kon nomi yoki telefon..." oninput="handleClientSearch(this.value)">
+            </div>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="clean-table">
+            <thead>
+              <tr>
+                <th>Mijoz / Do'kon Nomi</th>
+                <th>Mas'ul Shaxs & Telefon</th>
+                <th>Manzili</th>
+                <th>Jami Xarid</th>
+                <th>To'langan</th>
+                <th>Joriy Qarz (Haqqimiz)</th>
+                <th>Oxirgi Harakat</th>
+                <th>Amallar</th>
+              </tr>
+            </thead>
+            <tbody id="clients-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ======================================================== -->
     <!-- 5. MOLIYA & TANNARX (BIZNES EGASI UCHUN ASOSIY P&L)       -->
     <!-- ======================================================== -->
     <div id="tab-content-finance" style="display: none;">
@@ -1075,7 +1193,7 @@
   <div class="modal-overlay" id="modal-sale">
     <div class="modal-box">
       <div class="modal-header">
-        <div class="modal-title">📤 Tayyor Ro'mol Chiqimi (Sotuv)</div>
+        <div class="modal-title">📤 Tayyor Ro'mol Chiqimi (Sotuv & Nasiya)</div>
         <button class="btn-close-modal" onclick="closeModal('modal-sale')">&times;</button>
       </div>
       <form onsubmit="submitSale(event)">
@@ -1085,16 +1203,43 @@
             <label class="form-label">Tanlangan Ro'mol:</label>
             <div id="sale-goods-name" style="font-weight: 700; font-size: 15px; color: var(--text-title);"></div>
             <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
-              Mavjud astatka: <strong id="sale-goods-stock" style="color: var(--primary-blue);"></strong>
+              Mavjud astatka: <strong id="sale-goods-stock" style="color: var(--primary-blue);"></strong> | Birlik narxi: <strong id="sale-goods-price" style="color: #059669;"></strong>
             </div>
           </div>
+
           <div class="form-group">
             <label class="form-label">Chiqim miqdori (Dona):</label>
-            <input type="number" id="sale-quantity" class="form-control" min="1" required>
+            <input type="number" id="sale-quantity" class="form-control" min="1" oninput="calculateSaleTotal()" required>
           </div>
+
           <div class="form-group">
-            <label class="form-label">Qayerga / Kimga berilmoqda:</label>
-            <input type="text" id="sale-client" class="form-control" placeholder="Masalan: 'Chorsu' do'koni, xaridor" required>
+            <label class="form-label">Mijoz / Do'konni tanlang:</label>
+            <select id="sale-client-select" class="form-control" onchange="onSaleClientChange()">
+              <!-- JS orqali to'ldiriladi -->
+            </select>
+          </div>
+
+          <div class="form-group" id="sale-custom-client-group" style="display:none;">
+            <label class="form-label">Yangi mijoz / do'kon nomi:</label>
+            <input type="text" id="sale-custom-client" class="form-control" placeholder="Masalan: 'Chorsu' 5-do'kon">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">To'lov shakli:</label>
+            <select id="sale-payment-type" class="form-control" onchange="onSalePaymentTypeChange()">
+              <option value="full_cash">💵 Naqd / Karta (To'liq to'landi)</option>
+              <option value="debt">⏳ Nasiya / Qarzga (To'lanmadi)</option>
+              <option value="partial">⚖️ Qisman to'lov (Oldindan berildi, qolgani nasiya)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="sale-partial-amount-group" style="display:none;">
+            <label class="form-label">Oldindan to'langan summa (so'm):</label>
+            <input type="number" id="sale-paid-amount" class="form-control" min="0" placeholder="To'langan qismini kiriting" oninput="calculateSaleTotal()">
+          </div>
+
+          <div class="calc-box" id="sale-calc-box">
+            <!-- JS hisoblaydi -->
           </div>
         </div>
         <div class="modal-footer">
@@ -1102,6 +1247,104 @@
           <button type="submit" class="pill-action-btn btn-primary">Chiqim Qilish ✓</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Yangi mijoz qo'shish -->
+  <div class="modal-overlay" id="modal-new-client">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">➕ Yangi Mijoz / Hamkor Qo'shish</div>
+        <button class="btn-close-modal" onclick="closeModal('modal-new-client')">&times;</button>
+      </div>
+      <form onsubmit="submitNewClient(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Do'kon / Savdo nuqtasi nomi:</label>
+            <input type="text" id="newcli-name" class="form-control" placeholder="Masalan: «Gulbahor Butik»" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mas'ul shaxs (Ism-familiya):</label>
+            <input type="text" id="newcli-person" class="form-control" placeholder="Masalan: Gulbahor opa">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon raqam:</label>
+            <input type="text" id="newcli-phone" class="form-control" placeholder="+998 90 123-45-67">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Manzil / Bozor joylashuvi:</label>
+            <input type="text" id="newcli-address" class="form-control" placeholder="Masalan: Chorsu bozori, 4-qator 12-do'kon">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Boshlang'ich qarz balansi (agar avvaldan qarzi bo'lsa, so'mda):</label>
+            <input type="number" id="newcli-initial-debt" class="form-control" min="0" value="0" placeholder="0">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="pill-action-btn" onclick="closeModal('modal-new-client')">Bekor qilish</button>
+          <button type="submit" class="pill-action-btn btn-primary">Mijozni Saqlash ✓</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Mijozdan to'lov qabul qilish -->
+  <div class="modal-overlay" id="modal-client-payment">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title">💵 Mijozdan To'lov Qabul Qilish</div>
+        <button class="btn-close-modal" onclick="closeModal('modal-client-payment')">&times;</button>
+      </div>
+      <form onsubmit="submitClientPayment(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Mijoz / Do'konni tanlang:</label>
+            <select id="pay-client-select" class="form-control" onchange="onPaymentClientSelectChange()" required>
+              <!-- JS orqali to'ldiriladi -->
+            </select>
+          </div>
+          <div id="pay-client-info" style="font-size:13px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; margin-bottom:14px; color:#1e40af;">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Qabul qilinayotgan summa (so'm):</label>
+            <input type="number" id="pay-amount" class="form-control" min="1" step="any" placeholder="Masalan: 2500000" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">To'lov shakli:</label>
+            <select id="pay-method" class="form-control">
+              <option value="Naqd pul">💵 Naqd pul</option>
+              <option value="Karta orqali (Click / Payme)">💳 Plastik karta (Click / Payme)</option>
+              <option value="Perechisleniye (Bank o'tkazmasi)">🏛️ Perechisleniye (Bank o'tkazmasi)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Izoh / Kvitansiya raqami:</label>
+            <input type="text" id="pay-notes" class="form-control" placeholder="Masalan: Qarz yopish uchun to'lov">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="pill-action-btn" onclick="closeModal('modal-client-payment')">Bekor qilish</button>
+          <button type="submit" class="pill-action-btn btn-primary" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%);">To'lovni Qabul Qilish ✓</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Akt-Sverka (O'zaro hisob-kitob solishtirma dalolatnomasi) -->
+  <div class="modal-overlay" id="modal-client-statement">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header">
+        <div class="modal-title">📑 O'zaro Hisob-Kitob Solishtirma Dalolatnomasi (Akt-Sverka)</div>
+        <button class="btn-close-modal" onclick="closeModal('modal-client-statement')">&times;</button>
+      </div>
+      <div class="modal-body" id="client-statement-content">
+        <!-- JS orqali to'ldiriladi -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="pill-action-btn" onclick="exportStatementCSV()"><span>📥 CSV Ko'chirish</span></button>
+        <button type="button" class="pill-action-btn" onclick="printClientStatement()"><span>🖨️ Chop Etish</span></button>
+        <button type="button" class="pill-action-btn btn-primary" onclick="closeModal('modal-client-statement')">Yopish</button>
+      </div>
     </div>
   </div>
 

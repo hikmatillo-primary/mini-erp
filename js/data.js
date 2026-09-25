@@ -251,5 +251,155 @@ const DEFAULT_DATA = {
       description: "Xomashyo kirimi: +150 metr \"Shifon 'Zumrad' keng rulon\" (22,000 so'mdan). Yangi o'rtacha tannarx: 22,000 so'm/metr.",
       user: "Omborchi"
     }
+  ],
+  clients: [
+    {
+      id: "cli-1",
+      name: "Gulbahor Butik",
+      contactPerson: "Gulbahor opa",
+      phone: "+998 90 123-45-67",
+      address: "Toshkent sh., Chorsu bozori, 4-qator 12-do'kon",
+      balance: 8500000,
+      totalPurchased: 18500000,
+      totalPaid: 10000000,
+      lastActivity: "2026-09-25 15:20",
+      transactions: [
+        {
+          id: "tx-101",
+          date: "2026-09-20 11:30",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (160 dona)",
+          amount: 7200000,
+          paid: 4000000,
+          debtChange: 3200000,
+          balanceAfter: 3200000,
+          paymentMethod: "Naqd pul",
+          notes: "Boshlang'ich buyurtma yuborildi"
+        },
+        {
+          id: "tx-102",
+          date: "2026-09-23 16:45",
+          type: "sale",
+          title: "Klassik Zumrad (200 dona) + Atlas Gullik (50 dona)",
+          amount: 10900000,
+          paid: 3000000,
+          debtChange: 7900000,
+          balanceAfter: 11100000,
+          paymentMethod: "Aralash",
+          notes: "Katta partiya yetkazildi"
+        },
+        {
+          id: "tx-103",
+          date: "2026-09-25 15:20",
+          type: "payment",
+          title: "Qisman qarz to'lovi",
+          amount: 2600000,
+          paid: 2600000,
+          debtChange: -2600000,
+          balanceAfter: 8500000,
+          paymentMethod: "Karta orqali (Click / Payme)",
+          notes: "Bank ilovasi orqali o'tkazildi"
+        }
+      ]
+    },
+    {
+      id: "cli-2",
+      name: "Nafis Ro'mol Ulgurji",
+      contactPerson: "Otabek aka",
+      phone: "+998 93 456-78-90",
+      address: "Qo'qon sh., Yangi bozor, Ulgurji savdo rastasi",
+      balance: 0,
+      totalPurchased: 12000000,
+      totalPaid: 12000000,
+      lastActivity: "2026-09-24 17:00",
+      transactions: [
+        {
+          id: "tx-201",
+          date: "2026-09-21 14:00",
+          type: "sale",
+          title: "Atlas Gullik Shifon (200 dona)",
+          amount: 7600000,
+          paid: 7600000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Naqd pul",
+          notes: "Yuk olishda to'liq to'landi"
+        },
+        {
+          id: "tx-202",
+          date: "2026-09-24 17:00",
+          type: "sale",
+          title: "Atlas Gullik Shifon (115 dona)",
+          amount: 4400000,
+          paid: 4400000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Perechisleniye",
+          notes: "Bank hisob raqamidan to'landi"
+        }
+      ]
+    },
+    {
+      id: "cli-3",
+      name: "Atlas Savdo",
+      contactPerson: "Madina Karimova",
+      phone: "+998 97 789-01-23",
+      address: "Samarqand sh., Registon savdo majmuasi",
+      balance: 4200000,
+      totalPurchased: 7600000,
+      totalPaid: 3400000,
+      lastActivity: "2026-09-24 12:15",
+      transactions: [
+        {
+          id: "tx-301",
+          date: "2026-09-18 10:20",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (80 dona)",
+          amount: 3600000,
+          paid: 2000000,
+          debtChange: 1600000,
+          balanceAfter: 1600000,
+          paymentMethod: "Naqd pul",
+          notes: "Birinchi buyurtma"
+        },
+        {
+          id: "tx-302",
+          date: "2026-09-24 12:15",
+          type: "sale",
+          title: "Atlas Gullik Shifon (105 dona)",
+          amount: 4000000,
+          paid: 1400000,
+          debtChange: 2600000,
+          balanceAfter: 4200000,
+          paymentMethod: "Karta orqali",
+          notes: "Qoldiq 10 kunda beriladi"
+        }
+      ]
+    },
+    {
+      id: "cli-4",
+      name: "Hilol Ro'mollari",
+      contactPerson: "Jamshid aka",
+      phone: "+998 91 333-22-11",
+      address: "Andijon sh., Eski shahar bozori",
+      balance: 0,
+      totalPurchased: 5400000,
+      totalPaid: 5400000,
+      lastActivity: "2026-09-22 18:30",
+      transactions: [
+        {
+          id: "tx-401",
+          date: "2026-09-22 18:30",
+          type: "sale",
+          title: "Klassik Zumrad Shifon (120 dona)",
+          amount: 5400000,
+          paid: 5400000,
+          debtChange: 0,
+          balanceAfter: 0,
+          paymentMethod: "Naqd pul",
+          notes: "To'liq naqd to'langan"
+        }
+      ]
+    }
   ]
 };
