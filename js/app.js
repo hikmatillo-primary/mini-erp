@@ -2,21 +2,257 @@
  * Ro'mol ishlab chiqarish mini-ERP - Boltshift Bar Chart & Modular State (app.js)
  */
 
+const STATE_VERSION = "v11_rich_demo_seh";
+
 const DEFAULT_APP_DATA = {
-  rawMaterials: [],
-  boms: [],
-  batches: [],
-  finishedGoods: [],
+  rawMaterials: [
+    {
+      id: "raw-1",
+      name: "Shifon 'Zumrad' keng rulon",
+      category: "fabric",
+      unit: "metr",
+      stock: 420,
+      minStock: 100,
+      price: 22000,
+      color: "Yashil / Zumrad",
+      yieldPerMeter: 3,
+      updatedAt: "2026-09-25 10:30"
+    },
+    {
+      id: "raw-2",
+      name: "Shoyi 'Atlas Gullik' rulon",
+      category: "fabric",
+      unit: "metr",
+      stock: 180,
+      minStock: 50,
+      price: 26000,
+      color: "Qizil / Gullik",
+      yieldPerMeter: 3,
+      updatedAt: "2026-09-25 11:15"
+    },
+    {
+      id: "raw-3",
+      name: "Swarovski DMS bezak toshlari",
+      category: "accessory",
+      unit: "dona",
+      stock: 4800,
+      minStock: 1000,
+      price: 120,
+      color: "Yaltiroq billur",
+      yieldPerMeter: null,
+      updatedAt: "2026-09-24 16:40"
+    },
+    {
+      id: "raw-4",
+      name: "Overlog tikuv iplari (Yashil/Oq)",
+      category: "accessory",
+      unit: "bobina",
+      stock: 18,
+      minStock: 5,
+      price: 14000,
+      color: "Yashil / Oq",
+      yieldPerMeter: null,
+      updatedAt: "2026-09-24 15:20"
+    },
+    {
+      id: "raw-5",
+      name: "Brend to'qima etiketkasi",
+      category: "packaging",
+      unit: "dona",
+      stock: 850,
+      minStock: 200,
+      price: 700,
+      color: "Zarhal logotip",
+      yieldPerMeter: null,
+      updatedAt: "2026-09-23 09:00"
+    },
+    {
+      id: "raw-6",
+      name: "Logotipli polietilen salafan paket",
+      category: "packaging",
+      unit: "dona",
+      stock: 920,
+      minStock: 200,
+      price: 500,
+      color: "Shaffof / Oltin",
+      yieldPerMeter: null,
+      updatedAt: "2026-09-23 09:00"
+    }
+  ],
+  boms: [
+    {
+      id: "BOM-01",
+      name: "Klassik Zumrad Shifon",
+      size: "100x100 sm",
+      fabricId: "raw-1",
+      yieldPerMeter: 3,
+      stoneId: "raw-3",
+      stonesPerPiece: 25,
+      threadCost: 360,
+      labelCost: 700,
+      packageCost: 500,
+      laborCost: 5000,
+      overheadCost: 1200,
+      sellingPrice: 45000,
+      retailPrice: 75000,
+      notes: "Burchaklariga Swarovski tosh teriladi, yonlari zich overlog"
+    },
+    {
+      id: "BOM-02",
+      name: "Atlas Gullik Shifon",
+      size: "95x95 sm",
+      fabricId: "raw-2",
+      yieldPerMeter: 3,
+      stoneId: null,
+      stonesPerPiece: 0,
+      threadCost: 360,
+      labelCost: 700,
+      packageCost: 500,
+      laborCost: 4000,
+      overheadCost: 1200,
+      sellingPrice: 38000,
+      retailPrice: 65000,
+      notes: "Milliy naqshli, toshsiz, yengil ipak mato"
+    }
+  ],
+  batches: [
+    {
+      id: "BATCH-101",
+      bomId: "BOM-01",
+      name: "Klassik Zumrad Shifon",
+      size: "100x100 sm",
+      rollNumber: "RULON-#ZUM-01",
+      fabricMetersCut: 20,
+      yieldPerMeter: 3,
+      quantity: 60,
+      currentStage: "sewing",
+      fabricId: "raw-1",
+      stoneId: "raw-3",
+      startDate: "2026-09-25",
+      operator: "Dilnoza Tikuvchi",
+      notes: "Overlog tikuv mashinasida yonlari tikilmoqda"
+    },
+    {
+      id: "BATCH-102",
+      bomId: "BOM-01",
+      name: "Klassik Zumrad Shifon",
+      size: "100x100 sm",
+      rollNumber: "RULON-#ZUM-02",
+      fabricMetersCut: 30,
+      yieldPerMeter: 3,
+      quantity: 90,
+      currentStage: "stone",
+      fabricId: "raw-1",
+      stoneId: "raw-3",
+      startDate: "2026-09-25",
+      operator: "Nodira Termopresschi",
+      notes: "Termopressda Swarovski toshlar yopishtirilmoqda"
+    },
+    {
+      id: "BATCH-103",
+      bomId: "BOM-02",
+      name: "Atlas Gullik Shifon",
+      size: "95x95 sm",
+      rollNumber: "RULON-#ATL-01",
+      fabricMetersCut: 20,
+      yieldPerMeter: 3,
+      quantity: 60,
+      currentStage: "ironing",
+      fabricId: "raw-2",
+      stoneId: null,
+      startDate: "2026-09-24",
+      operator: "Malika Dazmolchi",
+      notes: "Dazmollash va sifat nazorati stolidan o'tmoqda"
+    },
+    {
+      id: "BATCH-104",
+      bomId: "BOM-01",
+      name: "Klassik Zumrad Shifon",
+      size: "100x100 sm",
+      rollNumber: "RULON-#ZUM-03",
+      fabricMetersCut: 20,
+      yieldPerMeter: 3,
+      quantity: 60,
+      currentStage: "cutting",
+      fabricId: "raw-1",
+      stoneId: "raw-3",
+      startDate: "2026-09-25",
+      operator: "Anvar Bichuvchi",
+      notes: "Bichuv stolida 20 metr rulon kesilmoqda"
+    }
+  ],
+  finishedGoods: [
+    {
+      id: "FG-201",
+      name: "Klassik Zumrad Shifon",
+      sku: "ROMOL-ZUM-100",
+      size: "100x100 sm",
+      color: "Zumrad Yashil",
+      decorType: "Swarovski Toshli",
+      stock: 140,
+      price: 45000,
+      costPrice: 18100,
+      lastProduced: "2026-09-25"
+    },
+    {
+      id: "FG-202",
+      name: "Atlas Gullik Shifon",
+      sku: "ROMOL-ATL-95",
+      size: "95x95 sm",
+      color: "Milliy Naqshli",
+      decorType: "Toshsiz",
+      stock: 95,
+      price: 38000,
+      costPrice: 15400,
+      lastProduced: "2026-09-24"
+    }
+  ],
   financials: {
-    monthlySalesVolume: 0,
-    monthlyRevenue: 0,
-    totalRawMaterialsCost: 0,
-    totalLaborCost: 0,
-    totalOverheadCost: 0,
-    netProfit: 0,
-    profitMargin: 0
+    monthlySalesVolume: 1150,
+    monthlyRevenue: 48500000,
+    totalRawMaterialsCost: 12850000,
+    totalLaborCost: 5600000,
+    totalOverheadCost: 3500000,
+    netProfit: 26550000,
+    profitMargin: 54.7
   },
-  historyLogs: []
+  historyLogs: [
+    {
+      id: "LOG-1001",
+      timestamp: "2026-09-25 15:20",
+      action: "sale_out",
+      description: "Chiqim: 50 dona \"Klassik Zumrad Shifon\" ('Chorsu Bozor' do'koni) ga sotildi. Jami: 2,250,000 so'm.",
+      user: "Seh boshlig'i"
+    },
+    {
+      id: "LOG-1002",
+      timestamp: "2026-09-25 14:10",
+      action: "batch_complete",
+      description: "#BATCH-099 to'liq salafanlandi va 80 dona tayyor omborga qabul qilindi!",
+      user: "Salafanlovchi"
+    },
+    {
+      id: "LOG-1003",
+      timestamp: "2026-09-25 11:30",
+      action: "stage_move",
+      description: "#BATCH-102 \"Tosh yopishtirish\" bosqichiga o'tkazildi (2,250 dona tosh sarflandi).",
+      user: "Termopresschi"
+    },
+    {
+      id: "LOG-1004",
+      timestamp: "2026-09-25 10:00",
+      action: "batch_start",
+      description: "Yangi partiya #BATCH-104 (RULON-#ZUM-03, 60 dona) Bichuvga berildi. 20m rulon ochildi.",
+      user: "Anvar Bichuvchi"
+    },
+    {
+      id: "LOG-1005",
+      timestamp: "2026-09-25 09:15",
+      action: "raw_in",
+      description: "Xomashyo kirimi: +150 metr \"Shifon 'Zumrad' keng rulon\" (22,000 so'mdan). Yangi o'rtacha tannarx: 22,000 so'm/metr.",
+      user: "Omborchi"
+    }
+  ]
 };
 
 let state = {
@@ -37,29 +273,31 @@ let state = {
 // Keshni tekshirish va ma'lumotlarni yuklash (Sahifa yangilanganda ma'lumot yo'qolmasligi kafolatlangan)
 function loadInitialState() {
   try {
+    const savedVersion = localStorage.getItem("romol_erp_version");
     const savedState = localStorage.getItem("romol_erp_state");
 
-    if (!savedState) {
-      // Birinchi marta kirganda bo'sh bazani yuklash
-      state.rawMaterials = [];
-      state.boms = [];
-      state.batches = [];
-      state.finishedGoods = [];
-      state.financials = { ...DEFAULT_APP_DATA.financials };
-      state.historyLogs = [];
+    // Versiya yangilanganda yoki dastlabki kirishda tushunarli demo ma'lumotlarni yuklash
+    if (savedVersion !== STATE_VERSION || !savedState) {
+      localStorage.setItem("romol_erp_version", STATE_VERSION);
+      state.rawMaterials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.rawMaterials));
+      state.boms = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.boms));
+      state.batches = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.batches));
+      state.finishedGoods = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.finishedGoods));
+      state.financials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
+      state.historyLogs = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
       saveState();
       return;
     }
 
     const parsed = JSON.parse(savedState);
-    state.rawMaterials = Array.isArray(parsed.rawMaterials) ? parsed.rawMaterials : [];
-    state.boms = Array.isArray(parsed.boms) ? parsed.boms : [];
-    state.batches = Array.isArray(parsed.batches) ? parsed.batches : [];
-    state.finishedGoods = Array.isArray(parsed.finishedGoods) ? parsed.finishedGoods : [];
+    state.rawMaterials = Array.isArray(parsed.rawMaterials) ? parsed.rawMaterials : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.rawMaterials));
+    state.boms = Array.isArray(parsed.boms) ? parsed.boms : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.boms));
+    state.batches = Array.isArray(parsed.batches) ? parsed.batches : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.batches));
+    state.finishedGoods = Array.isArray(parsed.finishedGoods) ? parsed.finishedGoods : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.finishedGoods));
     state.financials = (parsed.financials && typeof parsed.financials === 'object')
       ? parsed.financials
-      : { ...DEFAULT_APP_DATA.financials };
-    state.historyLogs = Array.isArray(parsed.historyLogs) ? parsed.historyLogs : [];
+      : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
+    state.historyLogs = Array.isArray(parsed.historyLogs) ? parsed.historyLogs : JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
   } catch (e) {
     console.error("Lokal ma'lumotlarni o'qishda xatolik:", e);
   }
@@ -67,6 +305,7 @@ function loadInitialState() {
 
 function saveState() {
   try {
+    localStorage.setItem("romol_erp_version", STATE_VERSION);
     localStorage.setItem("romol_erp_state", JSON.stringify({
       rawMaterials: state.rawMaterials,
       boms: state.boms,
@@ -81,17 +320,18 @@ function saveState() {
 }
 
 function resetDemoData() {
-  if (confirm("Haqiqatan ham barcha kiritilgan ma'lumotlarni tozalab, 0 holatiga keltirmoqchimisiz?")) {
+  if (confirm("Haqiqatan ham tushunarli namunaviy demo ma'lumotlarni qayta tiklamoqchimisiz?")) {
     localStorage.removeItem("romol_erp_state");
-    state.rawMaterials = [];
-    state.boms = [];
-    state.batches = [];
-    state.finishedGoods = [];
-    state.financials = { ...DEFAULT_APP_DATA.financials };
-    state.historyLogs = [];
+    localStorage.setItem("romol_erp_version", STATE_VERSION);
+    state.rawMaterials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.rawMaterials));
+    state.boms = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.boms));
+    state.batches = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.batches));
+    state.finishedGoods = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.finishedGoods));
+    state.financials = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.financials));
+    state.historyLogs = JSON.parse(JSON.stringify(DEFAULT_APP_DATA.historyLogs));
     saveState();
     renderApp();
-    showToast("Barcha ma'lumotlar tozalandi (0 holati)!", "info");
+    showToast("Namunaviy demo ma'lumotlar qayta tiklandi!", "info");
   }
 }
 
@@ -113,7 +353,7 @@ function showToast(message, type = "success") {
   }, 3500);
 }
 
-function addLog(action, description, user = "Sex boshlig'i") {
+function addLog(action, description, user = "Seh boshlig'i") {
   const newLog = {
     id: "LOG-" + Date.now().toString().slice(-4),
     timestamp: new Date().toLocaleString("uz-UZ", {
@@ -993,25 +1233,82 @@ function openRawInboundModal(selectedRawId = null) {
   `).join("");
 
   document.getElementById("inbound-quantity").value = "";
+  onInboundRawChange();
   document.getElementById("modal-raw-inbound").classList.add("open");
+}
+
+function onInboundRawChange() {
+  const rawId = document.getElementById("inbound-raw-select").value;
+  const raw = state.rawMaterials.find(r => r.id === rawId);
+  const priceInput = document.getElementById("inbound-price");
+  if (raw && priceInput) {
+    priceInput.value = raw.price || "";
+  }
+  calculateInboundAverage();
+}
+
+function calculateInboundAverage() {
+  const rawId = document.getElementById("inbound-raw-select").value;
+  const raw = state.rawMaterials.find(r => r.id === rawId);
+  const qtyInput = document.getElementById("inbound-quantity");
+  const priceInput = document.getElementById("inbound-price");
+  const calcBox = document.getElementById("inbound-calc-info");
+
+  if (!raw || !qtyInput || !priceInput || !calcBox) return;
+
+  const quantity = parseFloat(qtyInput.value) || 0;
+  const inboundPrice = parseFloat(priceInput.value) || 0;
+
+  if (quantity <= 0 || inboundPrice <= 0) {
+    calcBox.style.display = "none";
+    return;
+  }
+
+  const oldStock = raw.stock;
+  const oldPrice = raw.price;
+  const newStock = oldStock + quantity;
+  const newAveragePrice = (oldStock > 0)
+    ? Math.round(((oldStock * oldPrice) + (quantity * inboundPrice)) / newStock)
+    : inboundPrice;
+
+  calcBox.style.display = "block";
+  calcBox.innerHTML = `
+    <div style="font-weight:700; color:#1e40af; margin-bottom:4px;">📊 O'rtacha tannarx hisob-kitobi (O'rtacha tortilgan usul):</div>
+    <div>Hozirgi ombor: <b>${oldStock} ${raw.unit}</b> × ${oldPrice.toLocaleString()} so'm = <b>${(oldStock * oldPrice).toLocaleString()} so'm</b></div>
+    <div>Yangi kirim: <b>+${quantity} ${raw.unit}</b> × ${inboundPrice.toLocaleString()} so'm = <b>${(quantity * inboundPrice).toLocaleString()} so'm</b></div>
+    <div style="border-top:1px dashed #93c5fd; padding-top:4px; margin-top:4px;">
+      ➔ Yangi umumiy qoldiq: <b>${newStock} ${raw.unit}</b> | Yangi o'rtacha tannarx: <b style="color:#059669; font-size:13.5px;">${newAveragePrice.toLocaleString()} so'm / ${raw.unit}</b>
+    </div>
+  `;
 }
 
 function submitRawInbound(e) {
   e.preventDefault();
   const rawId = document.getElementById("inbound-raw-select").value;
   const quantity = parseFloat(document.getElementById("inbound-quantity").value);
+  const inboundPrice = parseFloat(document.getElementById("inbound-price").value);
 
   if (isNaN(quantity) || quantity <= 0) return;
 
   const raw = state.rawMaterials.find(r => r.id === rawId);
   if (raw) {
-    raw.stock += quantity;
+    const oldStock = raw.stock;
+    const oldPrice = raw.price;
+    const unitPrice = (!isNaN(inboundPrice) && inboundPrice > 0) ? inboundPrice : oldPrice;
+    const newStock = oldStock + quantity;
+    const newAveragePrice = (oldStock > 0)
+      ? Math.round(((oldStock * oldPrice) + (quantity * unitPrice)) / newStock)
+      : unitPrice;
+
+    raw.stock = newStock;
+    raw.price = newAveragePrice;
     raw.updatedAt = new Date().toISOString().slice(0, 16).replace("T", " ");
-    addLog("raw_in", `Xomashyo kirimi: +${quantity} ${raw.unit} "${raw.name}" omborga qabul qilindi.`);
+
+    addLog("raw_in", `Xomashyo kirimi: +${quantity} ${raw.unit} "${raw.name}" (${unitPrice.toLocaleString()} so'mdan). Yangi o'rtacha tannarx: ${newAveragePrice.toLocaleString()} so'm/${raw.unit}.`);
     saveState();
     closeModal("modal-raw-inbound");
     renderApp();
-    showToast(`${quantity} ${raw.unit} "${raw.name}" omborga qabul qilindi!`, "success");
+    showToast(`${quantity} ${raw.unit} "${raw.name}" qabul qilindi! O'rtacha tannarx: ${newAveragePrice.toLocaleString()} so'm`, "success");
   }
 }
 
@@ -1338,13 +1635,13 @@ function updateUnitEconomicsDisplay(bomId) {
 
       <div class="cost-item-row">
         <div class="cost-item-header">
-          <span>🏢 Doimiy Sex Xarajatlari (Ijara, Elektr, Tok, Soliq):</span>
+          <span>🏢 Doimiy Seh Xarajatlari (Ijara, Elektr, Tok, Soliq):</span>
           <span><strong>${overheadCost.toLocaleString()} so'm</strong> <span style="color:#64748b; font-size:12px;">(${pOverhead}%)</span></span>
         </div>
         <div class="cost-progress-track">
           <div class="cost-progress-fill fill-overhead" style="width: ${pOverhead}%;"></div>
         </div>
-        <div style="font-size:11.5px; color:#64748b;">Oylik sex xarajatining 1 dona mahsulotga taqsimlangan ulushi</div>
+        <div style="font-size:11.5px; color:#64748b;">Oylik seh xarajatining 1 dona mahsulotga taqsimlangan ulushi</div>
       </div>
 
       <div style="border-top: 1px dashed #cbd5e1; padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 14.5px;">
@@ -1360,7 +1657,7 @@ function exportFinanceReportCSV() {
   csv += `Hisobot sanasi: ${new Date().toLocaleString("uz-UZ")}\n\n`;
 
   csv += "1. MODELLAR BO'YICHA 1 DONA RO'MOL TANNARXI VA FOYDASI (UNIT ECONOMICS)\n";
-  csv += "Model,Olcham,Mato tannarxi (som),Tosh narxi (som),Qadoq va ip (som),Usta haqi (som),Sex xarajati (som),JAMI TANNARX (som),Ulgurji sotuv (som),SOF FOYDA (som),Rentabellik (%)\n";
+  csv += "Model,Olcham,Mato tannarxi (som),Tosh narxi (som),Qadoq va ip (som),Usta haqi (som),Seh xarajati (som),JAMI TANNARX (som),Ulgurji sotuv (som),SOF FOYDA (som),Rentabellik (%)\n";
 
   state.boms.forEach(bom => {
     const fabric = state.rawMaterials.find(r => r.id === bom.fabricId);
@@ -1383,13 +1680,13 @@ function exportFinanceReportCSV() {
     csv += `"${bom.name}","${bom.size}",${fCost},${sCost},${pkgCost},${labor},${overhead},${unitCost},${sell},${profit},${margin}%\n`;
   });
 
-  const fin = state.financials || DEFAULT_DATA.financials;
+  const fin = state.financials || DEFAULT_APP_DATA.financials;
   csv += "\n2. FOYDA VA ZARAR (P&L) BALANSI\n";
   csv += "Korsatkich,Summa (som)\n";
   csv += `"Jami sotuv tushumi (Gross Revenue)",${fin.monthlyRevenue}\n`;
   csv += `"Xomashyo xarajatlari",-${fin.totalRawMaterialsCost}\n`;
   csv += `"Ishchilar oylik maoshi",-${fin.totalLaborCost}\n`;
-  csv += `"Doimiy sex xarajatlari (Ijara/Elektr/Tok)",-${fin.totalOverheadCost}\n`;
+  csv += `"Doimiy seh xarajatlari (Ijara/Elektr/Tok)",-${fin.totalOverheadCost}\n`;
   csv += `"BIZNES EGASIGA QOLGAN SOF FOYDA",+${fin.netProfit}\n`;
   csv += `"Rentabellik (Marja)",${fin.profitMargin}%\n`;
 
@@ -1408,7 +1705,7 @@ function exportFinanceReportCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `Romol_Sexi_Moliyaviy_Hisobot_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `Romol_Sehi_Moliyaviy_Hisobot_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   showToast("Moliyaviy hisobot va Unit Economics CSV formatida yuklab olindi", "info");
 }
@@ -1482,7 +1779,7 @@ function exportHistoryCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `Sex_tarixi_${new Date().toISOString().slice(0, 10)}.csv`;
+  a.download = `Seh_tarixi_${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
   showToast("Tarix CSV formatida yuklab olindi", "info");
 }

@@ -58,7 +58,7 @@
 
         <button class="sidebar-nav-item" data-tab="history" onclick="switchTab('history')">
           <span class="nav-icon">📜</span>
-          <span class="nav-text">Sex Tarixi</span>
+          <span class="nav-text">Seh Tarixi</span>
         </button>
       </nav>
 
@@ -68,7 +68,7 @@
           <div class="user-avatar">AR</div>
           <div class="user-meta" style="flex:1;">
             <span class="user-name">Alisher R.</span>
-            <span class="user-role">Sex boshlig'i</span>
+            <span class="user-role">Seh boshlig'i</span>
           </div>
           <button class="circle-btn mini-reset-btn" onclick="resetDemoData()" title="Namunani qayta tiklash">🔄</button>
         </div>
@@ -87,7 +87,7 @@
       <header class="main-topbar">
         <div class="topbar-left">
           <div class="topbar-breadcrumb">
-            <span class="crumb-root">Sex Boshqaruvi</span>
+            <span class="crumb-root">Seh Boshqaruvi</span>
             <span class="crumb-separator">/</span>
             <span class="crumb-current" id="topbar-current-tab-title">📊 Ishlab Chiqarish va Ombor (Umumiy Boshqaruv)</span>
           </div>
@@ -97,9 +97,6 @@
             <span>📅</span>
             <span id="topbar-live-date">25 Sentabr, 2026</span>
           </div>
-          <button class="pill-action-btn btn-primary" onclick="openNewBatchModal()">
-            <span>⚡ + Yangi Partiya</span>
-          </button>
         </div>
       </header>
 
@@ -113,7 +110,7 @@
       <div class="overview-header">
         <div class="header-title-box">
           <h1>Ishlab Chiqarish va Ombor (Umumiy Boshqaruv)</h1>
-          <p>Sexdagi umumiy holat, oylik reja va zaxiralar monitoringi</p>
+          <p>Sehdagi umumiy holat, oylik reja va zaxiralar monitoringi</p>
         </div>
         <div class="header-actions">
           <button class="pill-action-btn"><span>📅 Bu oy</span><span style="font-size:11px;">▾</span></button>
@@ -645,7 +642,7 @@
       <div class="overview-header">
         <div class="header-title-box">
           <h1>Moliya, Tannarx va Foyda/Zarar (P&L Tahlili)</h1>
-          <p>Bitta ro'mol tannarxi, sof foyda marjasi, sex xarajatlari va biznes egasining daromadi</p>
+          <p>Bitta ro'mol tannarxi, sof foyda marjasi, seh xarajatlari va biznes egasining daromadi</p>
         </div>
         <div class="header-actions">
           <button class="pill-action-btn" onclick="exportFinanceReportCSV()"><span>📑 Moliyaviy Hisobot (CSV)</span></button>
@@ -671,7 +668,7 @@
 
         <div class="kpi-stat-card">
           <div class="kpi-top-row">
-            <span class="kpi-label">Jami Sex Xarajatlari</span>
+            <span class="kpi-label">Jami Seh Xarajatlari</span>
             <div class="kpi-icon-circle blue-soft" style="background:#fef2f2; color:#ef4444;">📉</div>
           </div>
           <div>
@@ -751,7 +748,7 @@
           <div class="box-header">
             <div>
               <div class="box-title">Foyda va Zarar (P&L) Balansi</div>
-              <div class="box-subtitle">Sexning joriy oylik tushumi va xarajatlari balansi</div>
+              <div class="box-subtitle">Sehning joriy oylik tushumi va xarajatlari balansi</div>
             </div>
             <span class="pill-badge" style="background:#ecfdf5; color:#059669; font-weight:700;">Sentabr 2026</span>
           </div>
@@ -771,7 +768,7 @@
                 <td style="text-align:right; font-weight:700; color:#ef4444;" id="pnl-row-labor">-0 so'm</td>
               </tr>
               <tr>
-                <td><strong>4. Doimiy sex xarajatlari (Overhead)</strong><div style="font-size:12px; color:#64748b;">Sex ijarasi, elektr energiya, uskunalar amortizatsiyasi</div></td>
+                <td><strong>4. Doimiy seh xarajatlari (Overhead)</strong><div style="font-size:12px; color:#64748b;">Seh ijarasi, elektr energiya, uskunalar amortizatsiyasi</div></td>
                 <td style="text-align:right; font-weight:700; color:#ef4444;" id="pnl-row-overhead">-0 so'm</td>
               </tr>
               <tr class="pnl-total-row">
@@ -811,7 +808,7 @@
     <div id="tab-content-history" style="display: none;">
       <div class="overview-header">
         <div class="header-title-box">
-          <h1>Sex Harakatlari Tarixi va Audit Jurnali</h1>
+          <h1>Seh Harakatlari Tarixi va Audit Jurnali</h1>
           <p>Kirim, chiqim, partiyalar boshlanishi va bosqichlar siljishi to'liq qaydnomasi</p>
         </div>
         <div class="header-actions">
@@ -1005,11 +1002,17 @@
         <div class="modal-body">
           <div class="form-group">
             <label class="form-label">Xomashyo turi:</label>
-            <select id="inbound-raw-select" class="form-control"></select>
+            <select id="inbound-raw-select" class="form-control" onchange="onInboundRawChange()"></select>
           </div>
           <div class="form-group">
             <label class="form-label">Kirim miqdori (Metr / Dona / Bobina):</label>
-            <input type="number" id="inbound-quantity" class="form-control" step="any" min="0.1" required>
+            <input type="number" id="inbound-quantity" class="form-control" step="any" min="0.1" placeholder="Miqdori (masalan: 100)" oninput="calculateInboundAverage()" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Yangi kirim narxi (1 birlik xarid narxi, so'mda):</label>
+            <input type="number" id="inbound-price" class="form-control" step="any" min="0" placeholder="Kirim narxi (so'm)" oninput="calculateInboundAverage()" required>
+          </div>
+          <div id="inbound-calc-info" style="font-size:12.5px; line-height:1.5; color:#1e40af; background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; margin-top:8px; display:none;">
           </div>
         </div>
         <div class="modal-footer">
