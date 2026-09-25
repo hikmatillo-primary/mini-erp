@@ -1,0 +1,13 @@
+{
+  "name": "mini-erp",
+  "version": "1.0.0",
+  "description": "Ro'mol ishlab chiqarish mini-ERP tizimi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/db.test.js"
+  },
+  "keywords": ["erp", "manufacturing", "textile"],
+  "author": "",
+  "license": "ISC"
+}
